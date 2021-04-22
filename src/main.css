@@ -1,0 +1,206 @@
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #FAFAFA;
+    font: 10pt "Verdana";
+}
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+
+#page-background
+{
+  width: 135mm;
+    height: 180mm;
+    /*padding: 20mm;*/
+    margin: 5mm 5mm;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    
+    background-image: url(../img/card-top.jpg);
+    background-size: 100% auto;
+    opacity: 0.3;
+    left:273px;
+    display: none;
+}
+.page {
+    width: 135mm;
+    height: 180mm;
+    /*padding: 20mm;*/
+    margin: 5mm 5mm;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    /*background: white;*/
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    float: left;
+
+   /* background-image: url(../img/card-top.jpg);*/
+    background-size: 100% auto;
+
+    font: 10pt "Verdana";
+}
+
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#datepicker
+{
+  width: 90px;
+  height: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+#invoice-input
+{
+  width: 170px;
+  height: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#message
+{
+  width: 253px;
+  /*min-height: 50px;*/
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  border-radius: 4px;
+  padding: 1px;
+  font-size: 12px;
+  text-align: center;
+}
+
+#class-data, #section-data
+{
+ /* min-width: 100px;*/
+  background-color: #ddd9f7;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+  float: left;
+  display: none;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+#sheet-select
+{
+  width: 120px;
+  margin: 0px;
+  height: 40px;
+  display: none;
+  float: left;
+}
+#view-all-btn
+{
+  display: none;
+  float: right;
+  height: 40px;
+  margin-left: 10px
+}
+.table-container
+{
+  display: none;
+}
+
+#tabulation
+{
+  display: none;
+}
+
+.table-container>table
+{
+  border-collapse: collapse;
+}
+.table-container>table td
+{
+    border: 1px solid black;
+}
+
+#students-list {
+  /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
+  border-collapse: collapse;
+  width: 100%;
+  clear: both;
+}
+
+#students-list td, #students-list th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#students-list tr:nth-child(even){background-color: #f2f2f2;}
+
+#students-list tr:hover {background-color: #ddd;}
+
+#students-list th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+#print-page
+{
+  /*background-image: url("../img/card-top.jpg");
+  background-size: 100% auto;*/
+}
+/*---------------------------------------------------------------------------*/
+.card-bg, .card-wireframe
+{
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+.card-wireframe
+{
+  display: none;
+}
+.pdf
+{
+  width: 210mm;
+  min-height: 297mm;
+}
+
+
+#print-btn, #print-all-btn
+{   
+    width: 80px;
+}
+
+#form1>input
+{
+	position: absolute;
+}
+
+#tabulation table
+{
+  border-collapse: collapse;
+  /*display: none;*/
+}
+#tabulation>table td, #tabulation>table th
+{
+    border: 1px solid black;
+    text-align: center;
+}
+#tabulation .l-a
+{
+  text-align: left;
+}

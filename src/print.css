@@ -1,0 +1,142 @@
+
+.topleft-logo
+{
+  vertical-align: top;
+  width: 225px;
+}
+.topleft-logo img
+{
+  width: 190px
+}
+.topright-info
+{
+  border-left: 1px solid black;
+  font-size: 12px;
+  /*font-weight: 600;*/
+  padding-left: 10px;
+}
+.invoice
+{
+  width: 90px;
+  height: 30px;
+  position: absolute;
+  margin: auto;
+  left: 0px;
+  right: 0px;
+  text-align: center;
+  margin-top: 15px;
+  border: 2px solid black;
+  border-radius: 20px;
+  box-shadow: 2px 2px black;
+  font-style: italic;
+  font-weight: 600;
+  padding-top: 2px;
+  font-size: 15pt;
+  font-family: Calibre;
+}
+
+.invoice-info-1
+{
+  margin-top: 24px;
+}
+.invoice-num
+{
+  width: 230px;
+}
+
+.invoice-date
+{
+  
+}
+.student-name
+{
+  width: 310px;
+  font-size: 12pt;
+}
+.class-name
+{
+  width: 100px;
+  font-size: 12pt;
+}
+.month-name
+{
+  width:225px;
+  font-size: 12pt;
+}
+.fee-description
+{
+  margin-top: 16px;
+  text-align: center;
+}
+.fee-description td
+{
+  height: 30px;
+}
+.fee-description td:nth-child(2)
+{
+  text-align: left;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.note
+{
+  margin-top: 20px;
+  width: 300px;
+  font-size: 9px;
+  float: left;
+}
+.note ul{margin: 0px}
+.note li{margin-left: -16px}
+
+.accountant {
+  float:left;
+  margin-top: 40px;
+  margin-left: 30px;
+  width: 100px;
+  border-top: 1px solid black;
+  text-align: center;
+}
+
+.print-container
+{
+  position: relative;
+  top: 10px;
+  left: 0px;
+  padding: 18px 25px;
+  width: 135mm;
+  height: 180mm;
+}
+
+@media print{
+    html, body {
+        /*width: 210mm;
+        height: 297mm;      */ 
+    }
+    body>div:not(.page){
+        display: none;
+    }
+    .page {
+        margin: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        /*min-height: initial;*/
+        box-shadow: initial;
+        float: none;
+        /*page-break-after: always;
+        background: initial;
+        width: 210mm;
+        height: 297mm; */
+    }
+    .top-table td
+    {
+      border-color: transparent;
+    }    
+    .print-container
+    {      
+      /*top: 10px;
+      left: 30px;*/
+      top:0px;/*0px*/
+      left:35px;
+    }
+}
