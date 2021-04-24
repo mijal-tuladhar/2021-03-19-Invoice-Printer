@@ -12,6 +12,7 @@
 <!-- <script type="text/javascript" src="libs/xlsx/0.8.0/xlsx.js"></script> -->
 <script type="text/javascript" src="libs/xlsx/xlsx.js"></script>
 <script type="text/javascript" src="libs/jquery-ui.min.js"></script>
+<script type="text/javascript" src="libs/toword.js"></script>
 
 <link rel="stylesheet" type="text/css" href="src/main.css">
 <link rel="stylesheet" type="text/css" href="src/print.css">
@@ -118,7 +119,7 @@
                 <tr><td>7</td><td></td><td></td></tr>
                 <tr><td>8</td><td></td><td></td></tr>
                 <tr class="total-invoice-row"><td></td><td style="text-align: right;">Total Invoice:</td><td class="total-invoice" ></td></tr>
-                <tr><td colspan="3"></td></tr>
+                <tr><td colspan="3" style="text-align: left;padding: 5px;"><span>In Words: </span><span id="amount-words">__________________________________________</span></td></tr>
             </table>
             <div class="note">
                 Note:

@@ -311,7 +311,9 @@ window.onload = function()
 
 			}
 		}
-		if (ivData.data[0] != "")
+
+		// Previous Dues if Any
+		if (ivData.data[1] != "" && ivData.data[1] != 0)
 		{
 			if (counter>8)
 			{
@@ -319,14 +321,18 @@ window.onload = function()
 				var mytd = $('#'+pageName + ' .fee-description td');
 				mytd.height(mytd.height()-2);
 			}	
-			wrv(t1, counter, 1, feeInfoName[0]);
-			wrv(t1, counter, 2, ivData.data[0]);
+			wrv(t1, counter, 1, feeInfoName[1]);
+			wrv(t1, counter, 2, ivData.data[1]);
 			counter++;
 		}
-		if (ivData.data[1] != "")
+
+		//Total
+		if (ivData.data[0] != "")
 		{
-			$('#'+pageName + ' .total-invoice').html(ivData.data[1]);
+			$('#'+pageName + ' .total-invoice').html(ivData.data[0]);
+			$('#amount-words').html(capitalizeTheFirstLetterOfEachWord(numWords(ivData.data[0])) + " Only");
 		}
+
 	}
 
 	$('#print-btn').click(function(){
