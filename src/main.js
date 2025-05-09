@@ -59,7 +59,7 @@ window.onload = function()
 					var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 					var XL = XLSX.utils.sheet_to_html(workbook.Sheets[sheetName]);
 					var json_object = JSON.stringify(XL_row_object);
-					//console.log(sheetName,JSON.parse(json_object));
+					
 					var sheetTable = document.createElement('div');
 					$(sheetTable).html(XL);
 					//$("body").append(sheetTable);
@@ -121,10 +121,37 @@ window.onload = function()
 			grade = _grade;
 			$('#class-data>span').html(grade);
 			$('#class-data').show();
+			populateSectionSelection(data);
 			populateSheetSelection();	
 			generateList(data);	
 			generateInvoiceData();
 		}
+	}
+
+	function populateSectionSelection(data) {
+		const sections = ["ALL"];
+
+		let a = 2;
+		let value;
+
+		do {
+			value = rd(data, a, 1);
+
+			if (value && !sections.some((section) => section == value)) sections.push(value);
+			a++;
+		} while (value);
+
+		$('#section-select').html('');
+		sections.forEach((section) => {
+			$('#section-select').append('<option value="'+section+'">'+section+'</option>');
+		});
+
+		
+		$('#section-select').show();
+		$('#section-select').on("change", () => {
+			generateList(data);
+			generateInvoiceData();
+		});
 	}
 
 	function populateSheetSelection()
@@ -144,19 +171,23 @@ window.onload = function()
 		var a = 2;
 		var value = "";
 		invoiceData = [];
-		while(a<100)
+		do
 		{
 			value = rd(data,a,3);
 			if (value == null) break;
-			name = value;
+			
 			var section = rd(data,a,1);
 			var roll = rd(data,a,2);
-			//console.log(value);
-			invoiceData.push({name: name, section: section, roll: roll, data: null});
-			str += '<tr><td>'+section+'</td><td>'+roll+'</td><td>'+name+'</td><td><button class="viewbtn" value="'+roll+'_'+section+'">View</button</td><td><input type="checkbox" class="student-checkboxes" id="checkbox_'+section+'_'+roll+'" checked></td></tr>'
+			
+			const sectionSelect = $("#section-select").val();
+			if (sectionSelect == "ALL" || section == sectionSelect) {
+				invoiceData.push({name: value, section: section, roll: roll, data: null});
+				str += '<tr><td>'+section+'</td><td>'+roll+'</td><td>'+value+'</td><td><button class="viewbtn" value="'+roll+'_'+section+'">View</button</td><td><input type="checkbox" class="student-checkboxes" id="checkbox_'+section+'_'+roll+'" checked></td></tr>'
+			}
 
 			a++;
-		}
+		} while (value);
+
 		$('#students-list').html(str);
 
 		$('.viewbtn').click(function(e){
@@ -169,7 +200,6 @@ window.onload = function()
 			{
 				if (invoiceData[i].roll==roll && invoiceData[i].section==section)
 				{
-					//console.log("Student Selected: ",roll,invoiceData[i].name);
 					$('.mutli-print').remove();
 					setData('print-page',i);
 					$('#print-page').show();
@@ -179,7 +209,6 @@ window.onload = function()
 		});
 
 		$('#main-checkbox').click(function(){
-			console.log(this.checked);
 			var isChecked = this.checked;
 			$('.student-checkboxes').each(function(){
 				$(this).attr("checked",isChecked);
@@ -196,7 +225,7 @@ window.onload = function()
 	function generateInvoiceData()
 	{
 		selectedSheetName = $('#sheet-select').children("option:selected").val();
-		console.log("selectedSheetName");
+		
 		var data = getTableData(selectedSheetName);
 		if (data!=null)
 		{
@@ -211,7 +240,6 @@ window.onload = function()
 				if (feeInfo!=null)
 				{
 					feeInfoName.push(feeInfo);
-					console.log(feeInfo);
 				}
 				else break;
 				a++;
@@ -242,7 +270,6 @@ window.onload = function()
 				}else break;
 				a++;
 			}
-			console.log(invoiceData);
 		}
 	}
 
@@ -281,8 +308,12 @@ window.onload = function()
 	{
 
 		var ivData = invoiceData[index];
-		$('#'+pageName + ' .invoice-num')[0].innerHTML = invoiceNumber;
-		invoiceNumber++;
+		if (invoiceNumber != "") {
+			$('#'+pageName + ' .invoice-num')[0].innerHTML = invoiceNumber;
+			invoiceNumber++;
+		} else {
+			$('#'+pageName + ' .invoice-num')[0].innerHTML = "";
+		}
 		$('#'+pageName + ' .invoice-date')[0].innerHTML = $('#datepicker').val();
 		$('#'+pageName + ' .student-name')[0].innerHTML = ivData.name;
 		$('#'+pageName + ' .class-name')[0].innerHTML = grade;
@@ -330,7 +361,7 @@ window.onload = function()
 		if (ivData.data[0] != "")
 		{
 			$('#'+pageName + ' .total-invoice').html(ivData.data[0]);
-			$('#amount-words').html(capitalizeTheFirstLetterOfEachWord(numWords(ivData.data[0])) + " Only");
+			$('#'+pageName + ' .amount-words').html(capitalizeTheFirstLetterOfEachWord(numWords(ivData.data[0])) + " Only");
 		}
 
 	}

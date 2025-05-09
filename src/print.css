@@ -67,6 +67,8 @@
 {
   margin-top: 16px;
   text-align: center;
+  border-collapse: collapse;
+  border-color: black;
 }
 .fee-description td
 {

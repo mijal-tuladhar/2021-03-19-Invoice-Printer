@@ -86,7 +86,7 @@ input[type=text], select {
   text-align: center;
 }
 
-#class-data, #section-data
+#class-data
 {
  /* min-width: 100px;*/
   background-color: #ddd9f7;
@@ -98,8 +98,13 @@ input[type=text], select {
   margin-right: 10px;
   margin-bottom: 10px;
 }
-
-#sheet-select
+#section-data
+{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#section-select, #sheet-select
 {
   width: 120px;
   margin: 0px;
@@ -107,6 +112,10 @@ input[type=text], select {
   display: none;
   float: left;
 }
+#sheet-select {
+  clear: both;
+}
+
 #view-all-btn
 {
   display: none;
@@ -156,6 +165,7 @@ input[type=text], select {
   background-color: #4CAF50;
   color: white;
 }
+
 #print-page
 {
   /*background-image: url("../img/card-top.jpg");
