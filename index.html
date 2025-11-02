@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Invoice Printer</title>
+  <title>Invoice Printer v02</title>
 </head>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
@@ -20,113 +21,171 @@
 <script type="text/javascript" src="src/main.js"></script>
 
 <body>
-	<div style="float:left; margin: 10px;">
-		<form enctype="multipart/form-data">
-		    <input id="upload" type=file  name="files[]" multiple >
-		</form>
-		<hr>
-	        <button id="print-btn"> Print </button>
-	        <!-- <button id="clear-btn" style="margin: 0px 15px;"> Clear</button> -->
-            <!-- <button id="generate-tabulation">Generate XLS</button> -->
-		<hr>
-            <input type="text" name="" id="datepicker" placeholder="Enter Date">
-            <input type="number" name="" id="invoice-input" placeholder="Starting Invoice Number">
-		<hr>
-        <!-- <select id="sheet-select">
-						
-		</select> -->
-		<div id="message">
-			<p>Upload Invoice Data!</p>
-		</div>
-		<hr>
-		<div id="class-data" class="form-group">
-			<label>Class: </label><span>1</span>
-		</div>
-        <div id="section-data"><label>Section:</label><select id="section-select">All</select></div>
-		<div>
-			<select id="sheet-select">All</select>
-		</div>
-	     <div>
-	     	
-	     	<button id="view-all-btn"> View Selected</button>
-	     </div>
-	    <table id="students-list" >
-	    	
-	    </table>
-	</div>
-
-	<div id="sheet-table-container-1" class="table-container"></div>
-    <div id="sheet-table-container-2" class="table-container"></div>
-	<div id="sheet-table-container-3" class="table-container"></div>
-    <div id="tabulation"></div>
-    <div id="page-background"></div>
-	<div id="print-page" class="page">
-        
-       <div class="print-container">
-        	<img class="card-wireframe" src="img/reportcard1term.png" >
-            <table>
-                <tr>
-                    <td class="topleft-logo"><img src="img/logo_bw.png"></td>
-                    <td class="topright-info" style="">
-                            <div>Dhunge Dhara, Nursery Chowk</div>
-                            <div>Banasthali, Kathmandu, Nepal</div>
-                            <div>Tel.: 4880988 / 4880996</div>
-                            <div>Email: mycoronaschool@gmail.com</div>
-                            <div>Web: www.coronaschool.edu.np</div>
-                    </td>
-                </tr>
-            </table>
-            <div class="invoice"><font style=""><i> Invoice</i></font></div>
-            <table class="invoice-info-1">
-                <tr>
-                    <td>
-                        Invoice No.:
-                    </td>
-                    <td class="invoice-num">
-                       &nbsp;&nbsp;&nbsp;
-                    </td>
-                    <td>
-                        Date: 
-                    </td>
-                    <td class="invoice-date">
-                        &nbsp;&nbsp;&nbsp;
-                    </td>
-                </tr>
-            </table>
-            <table style="margin-top: 10px">
-                <tr>
-                    <td>Student's Name:</td><td class="student-name" style="border-bottom: 1px solid black;">&nbsp;&nbsp;&nbsp;</td>
-                </tr>
-            </table>  
-             <table style="margin-top: 6px">
-                <tr>
-                    <td>Class:</td><td class="class-name" style="border-bottom: 1px solid black;">&nbsp;&nbsp;&nbsp;</td>
-                    <td>Month:</td><td class="month-name" style="border-bottom: 1px solid black;">&nbsp;&nbsp;&nbsp;</td>
-                </tr>
-            </table>    
-            <table class="fee-description" cellspacing="0" border="1" cellpadding="0">
-                <tr><td width="40px">S.N</td><td width="300px" style="text-align: center;">Fee Description</td><td width="100px">Amount</td></tr>
-                <tr><td>1</td><td></td><td></td></tr>
-                <tr><td>2</td><td></td><td></td></tr>
-                <tr><td>3</td><td></td><td></td></tr>
-                <tr><td>4</td><td></td><td></td></tr>
-                <tr><td>5</td><td></td><td></td></tr>
-                <tr><td>6</td><td></td><td></td></tr>
-                <tr><td>7</td><td></td><td></td></tr>
-                <tr><td>8</td><td></td><td></td></tr>
-                <tr class="total-invoice-row"><td></td><td style="text-align: right;">Total Invoice:</td><td class="total-invoice" ></td></tr>
-                <tr><td colspan="3" style="text-align: left;padding: 5px;"><span>In Words: </span><span class="amount-words">__________________________________________</span></td></tr>
-            </table>
-            <div class="note">
-                Note:
-                <ul>
-                    <li>Fee should be paid within 1st week of the month or late fee of Rs. 20/- Per Day will be assessed after the due date.</li>
-                    <li>All the fees once made are non-refundable, non adjustable and non transferable.</li>
-                </ul>
-            </div>
-        	<div class="accountant">Accountant</div>
-        </div>
-        
+  <div style="float:left; margin: 10px;">
+    <form enctype="multipart/form-data">
+      <input id="upload" type=file name="files[]">
+    </form>
+    <hr>
+    <button id="print-btn"> Print </button>
+    <hr>
+    <input type="text" name="" id="datepicker" placeholder="Enter Date">
+    <input type="number" name="" id="invoice-input" placeholder="Starting Invoice Number">
+    <hr>
+    <div id="message">
+      <p>Upload Invoice Data!</p>
     </div>
+    <hr>
+    <div id="class-data" class="form-group">
+      <label>Class: </label><span>1</span>
+    </div>
+    <div id="section-data"><label>Section:</label><select id="section-select">All</select></div>
+    <div>
+      <select id="sheet-select">All</select>
+    </div>
+    <div>
+
+      <button id="view-all-btn"> View Selected</button>
+    </div>
+    <table id="students-list">
+
+    </table>
+  </div>
+
+  <div id="sheet-table-container-1" class="table-container"></div>
+  <div id="sheet-table-container-2" class="table-container"></div>
+  <div id="sheet-table-container-3" class="table-container"></div>
+  <div id="tabulation"></div>
+  <div id="page-background"></div>
+  <div id="print-page" class="page">
+
+    <div class="print-container">
+      <table>
+        <tr>
+          <td class="topleft-logo"><img src="img/logo_bw.png"></td>
+          <td class="topright-info" style="">
+            <div>Dhunge Dhara, Nursery Chowk</div>
+            <div>Banasthali, Kathmandu, Nepal</div>
+            <div>Tel.: 4880988 / 4880996</div>
+            <div>Email: mycoronaschool@gmail.com</div>
+            <div>Web: www.coronaschool.edu.np</div>
+          </td>
+        </tr>
+      </table>
+      <div class="invoice">
+        <font><i> Invoice</i></font>
+      </div>
+      <table class="invoice-info">
+        <tr>
+          <td>
+            Invoice No.:
+          </td>
+          <td class="invoice-num">
+            &nbsp;&nbsp;&nbsp;
+          </td>
+          <td>
+            Date:
+          </td>
+          <td class="invoice-date">
+            &nbsp;&nbsp;&nbsp;
+          </td>
+        </tr>
+      </table>
+      <table class="invoice-info">
+        <tr>
+          <td>Student's Name:</td>
+          <td class="student-name" style="border-bottom: 1px solid black;">&nbsp;&nbsp;&nbsp;</td>
+        </tr>
+      </table>
+      <table class="invoice-info">
+        <tr>
+          <td>Class:</td>
+          <td class="class-name" style="border-bottom: 1px solid black;">&nbsp;&nbsp;&nbsp;</td>
+          <td>Month:</td>
+          <td class="month-name" style="border-bottom: 1px solid black;">&nbsp;&nbsp;&nbsp;</td>
+        </tr>
+      </table>
+      <table class="fee-description" cellspacing="0" border="1" cellpadding="0">
+        <tr>
+          <td width="40px">S.N</td>
+          <td width="320px" style="text-align: center;">Fee Description</td>
+          <td width="100px">Amount</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr class="total-invoice-row">
+          <td></td>
+          <td style="text-align: right;">Total Invoice:</td>
+          <td class="total-invoice"></td>
+        </tr>
+        <tr>
+          <td colspan="3" style="text-align: left;padding: 5px;"><span>In Words: </span><span
+              class="amount-words">__________________________________________</span></td>
+        </tr>
+      </table>
+      <!-- <div class="note-signature">
+        <div class="note">
+          Note:
+          <ul>
+            <li>Fee should be paid within 1st week of the month or late fee of Rs. 20/- Per Day will be assessed after
+              the due date.</li>
+            <li>All the fees once made are non-refundable, non adjustable and non transferable.</li>
+          </ul>
+        </div>
+        <div class="accountant">Accountant</div>
+
+      </div> -->
+      <div class="qr-signature">
+        <div class="qr-image"><img src="img/qr.png" alt=""></div>
+        <div class="qr-note">
+          <ul>
+            <li>Kindly use this QR to deposit regular monthly fees.</li>
+            <li>Please mention students name and grade in remarks column during online payment.</li>
+            <li>In case of any error or confusion, kindly contact the account department.</li>
+          </ul>
+        </div>
+        <div class="accountant">Accountant</div>
+      </div>
+    </div>
+
+  </div>
 </body>
+
 </html>

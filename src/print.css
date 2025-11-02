@@ -1,4 +1,3 @@
-
 .topleft-logo
 {
   vertical-align: top;
@@ -12,14 +11,12 @@
 {
   border-left: 1px solid black;
   font-size: 12px;
-  /*font-weight: 600;*/
   padding-left: 10px;
 }
 .invoice
 {
   width: 90px;
   height: 30px;
-  position: absolute;
   margin: auto;
   left: 0px;
   right: 0px;
@@ -35,19 +32,21 @@
   font-family: Calibre;
 }
 
-.invoice-info-1
-{
-  margin-top: 24px;
+.invoice-info {
+  margin-top: 10px;
+
+}
+.invoice-info {
+  width: 100%;
+} 
+.invoice-info td {
+  height: 20px;
 }
 .invoice-num
 {
-  width: 230px;
+  width: 200px;
 }
 
-.invoice-date
-{
-  
-}
 .student-name
 {
   width: 310px;
@@ -65,7 +64,7 @@
 }
 .fee-description
 {
-  margin-top: 16px;
+  margin-top: 30px;
   text-align: center;
   border-collapse: collapse;
   border-color: black;
@@ -80,23 +79,23 @@
   padding-left: 10px;
   padding-right: 10px;
 }
+
 .note
 {
   margin-top: 20px;
-  width: 300px;
+  width: 440px;
   font-size: 9px;
-  float: left;
 }
-.note ul{margin: 0px}
-.note li{margin-left: -16px}
+.note ul, .qr-note ul {margin: 0px}
+.note li, .qr-note li {margin-left: -16px}
 
 .accountant {
-  float:left;
-  margin-top: 40px;
-  margin-left: 30px;
   width: 100px;
   border-top: 1px solid black;
   text-align: center;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
 }
 
 .print-container
@@ -106,29 +105,57 @@
   left: 0px;
   padding: 18px 25px;
   width: 135mm;
-  height: 180mm;
+  /* height: 250mm; */
+}
+
+.qr-signature {
+  width: 100%;
+  display: flex;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  
+  position: relative;
+}
+
+.qr-image {
+  width: 200px;
+  border: 2px solid black;
+  flex-shrink: 0;
+
+}
+
+.qr-image > img {
+  width: 100%;
+}
+
+.qr-note {
+  width: 100%;
 }
 
 @media print{
-    html, body {
-        /*width: 210mm;
-        height: 297mm;      */ 
-    }
-    body>div:not(.page){
+    body>div:not(.print-double-page-container){
         display: none;
     }
+
+    .print-double-page-container{
+      display: flex;
+    }
+
+    .print-double-page-container > div:first-child {
+      margin-left: 40px;
+    }
+
+    .print-double-page-container > div:last-child {
+      margin-left: 80px;
+    }
+    
     .page {
         margin: 0;
         border: initial;
         border-radius: initial;
         width: initial;
-        /*min-height: initial;*/
         box-shadow: initial;
         float: none;
-        /*page-break-after: always;
-        background: initial;
-        width: 210mm;
-        height: 297mm; */
     }
     .top-table td
     {
@@ -136,9 +163,10 @@
     }    
     .print-container
     {      
-      /*top: 10px;
-      left: 30px;*/
-      top:0px;/*0px*/
-      left:35px;
+      top:0px;
+    }
+    
+    .qr-signature {
+      margin-bottom: 0px;
     }
 }
