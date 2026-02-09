@@ -44,10 +44,14 @@ window.onload = function () {
           type: 'binary'
         });
 
-        workbook.SheetNames.forEach(function (sheetName) {
+        const { SheetNames, Sheets } = workbook;
+
+        var length = SheetNames.length;
+        
+        SheetNames.forEach(function (sheetName, index) {
           // Here is your object
-          var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-          var XL = XLSX.utils.sheet_to_html(workbook.Sheets[sheetName]);
+          var XL_row_object = XLSX.utils.sheet_to_row_object_array(Sheets[sheetName]);
+          var XL = XLSX.utils.sheet_to_html(Sheets[sheetName]);
           var json_object = JSON.stringify(XL_row_object);
 
           var sheetTable = document.createElement('div');
@@ -55,7 +59,7 @@ window.onload = function () {
 
           sheets.push({ name: sheetName, table: sheetTable });
 
-          if (sheetName.toLowerCase() == "chaitra") {
+          if (index == length - 1) {
             setClassVals();
           }
 
