@@ -201,3 +201,7 @@ input[type=text], select {
 {
   text-align: left;
 }
+
+.text-right{
+  text-align: right !important;
+}

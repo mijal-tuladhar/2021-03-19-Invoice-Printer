@@ -13,6 +13,8 @@ window.onload = function () {
   var defaultFeeDescriptionTable = $('.fee-description')[0].outerHTML;
   var invoiceNumber;
 
+  var indexOfStudentSelected;
+
   $("#datepicker").datepicker().datepicker('setDate', 'today')
     .datepicker("option", "dateFormat", 'dd-mm-yy');
 
@@ -158,17 +160,23 @@ window.onload = function () {
     var a = 2;
     var value = "";
     invoiceData = [];
+    indexOfStudentSelected = null;
+
     do {
       value = rd(data, a, 3);
-      if (value == null) break;
+
+      console.log("value", value, "value == null", value == null, 'value==""', value == "");
+
+      if (value == null || value == "") break;
 
       var section = rd(data, a, 1);
       var roll = rd(data, a, 2);
 
       const sectionSelect = $("#section-select").val();
       if (sectionSelect == "ALL" || section == sectionSelect) {
+        const index = invoiceData.length;
         invoiceData.push({ name: value, section: section, roll: roll, data: null });
-        str += '<tr><td>' + section + '</td><td>' + roll + '</td><td>' + value + '</td><td><button class="viewbtn" value="' + roll + '_' + section + '">View</button</td><td><input type="checkbox" class="student-checkboxes" id="checkbox_' + section + '_' + roll + '" checked></td></tr>'
+        str += '<tr><td>' + section + '</td><td>' + roll + '</td><td>' + value + '</td><td><button class="viewbtn" value="' + 'view-btn-' + index + '">View</button</td><td><input type="checkbox" class="student-checkboxes" id="student-checkbox-' + index + '" checked></td></tr>';
       }
 
       a++;
@@ -176,14 +184,40 @@ window.onload = function () {
 
     $('#students-list').html(str);
 
+    console.log($('.student-checkboxes'));
+
+    $('.student-checkboxes').click(function (event) {
+      var val = this.getAttribute('id').split('-');
+      var index = parseInt(val[2]);
+
+      console.log(invoiceData[index]);
+
+
+      if (event.shiftKey && indexOfStudentSelected != undefined) {
+        const minIndex = Math.min(indexOfStudentSelected, index);
+        const maxIndex = Math.max(indexOfStudentSelected, index);
+
+        for (var i = minIndex; i <= maxIndex; i++) {
+          $('#student-checkbox-' + i).prop("checked", this.checked);
+        }
+      }
+
+      indexOfStudentSelected = index;
+    });
+
     $('.viewbtn').click(function (e) {
-      var val = this.getAttribute('value').split('_');
-      var roll = val[0];
-      var section = val[1];
+      var val = this.getAttribute('value').split('-');
+      var index = parseInt(val[2]);
 
       invoiceNumber = $('#invoice-input').val();
 
-      for (var i = 0; i < invoiceData.length; i++) {
+      $('#print-page').hide();
+      $('.print-double-page-container').remove();
+      
+      createPage(index);
+
+
+      /* for (var i = 0; i < invoiceData.length; i++) {
         if (invoiceData[i].roll == roll && invoiceData[i].section == section) {
 
           $('#print-page').hide();
@@ -192,13 +226,13 @@ window.onload = function () {
           createPage(i);
           break;
         }
-      }
+      } */
     });
 
     $('#main-checkbox').click(function () {
       var isChecked = this.checked;
       $('.student-checkboxes').each(function () {
-        $(this).attr("checked", isChecked);
+        $(this).prop("checked", isChecked);
       })
     });
   }
@@ -210,7 +244,7 @@ window.onload = function () {
     $('.print-double-page-container').remove();
 
     for (var i = 0; i < invoiceData.length; i++) {
-      var isChecked = $('#checkbox_' + invoiceData[i].section + '_' + invoiceData[i].roll)[0].checked;
+      var isChecked = $('#student-checkbox-' + i)[0].checked;
 
       if (isChecked) {
         createPage(i);
@@ -291,8 +325,18 @@ window.onload = function () {
   }
 
   function setData(pageName, index) {
+    var invoiceDataObject = invoiceData[index];
+    var { data } = invoiceDataObject;
+    var feeStartRow = 4;
+    var totalMonthlyFee = 0;
+    var previousDues = 0;
+    var counter = 1;
 
-    var ivData = invoiceData[index];
+    var reduceTDHeight = function () {
+      var mytd = $('#' + pageName + ' .fee-description td');
+      mytd.height(mytd.height() - 2);
+    }
+
     if (invoiceNumber != "") {
       $('#' + pageName + ' .invoice-num')[0].innerHTML = invoiceNumber;
       invoiceNumber++;
@@ -300,7 +344,7 @@ window.onload = function () {
       $('#' + pageName + ' .invoice-num')[0].innerHTML = "";
     }
     $('#' + pageName + ' .invoice-date')[0].innerHTML = $('#datepicker').val();
-    $('#' + pageName + ' .student-name')[0].innerHTML = ivData.name;
+    $('#' + pageName + ' .student-name')[0].innerHTML = invoiceDataObject.name;
     $('#' + pageName + ' .class-name')[0].innerHTML = grade;
     $('#' + pageName + ' .month-name')[0].innerHTML = selectedSheetName;
 
@@ -309,43 +353,48 @@ window.onload = function () {
 
     var t1 = $('#' + pageName + ' .fee-description')[0];
 
-    var counter = 1;
-    for (var i = 2; i < ivData.data.length; i++) {
-      var amount = ivData.data[i]
+    // Previous Dues if Any
+    if (data[1] != "" && data[1] != 0) {
+      previousDues = parseFloat(data[1]);
+      $('#' + pageName + ' .previous-dues').html(previousDues);
+
+      reduceTDHeight();
+    } else {
+      $('#' + pageName + ' .previous-dues-row').remove();
+    }
+
+
+    for (var i = feeStartRow; i < data.length; i++) {
+      var amount = data[i]
       if (amount != "") {
 
-        if (counter > 8) {
-          $('#' + pageName + ' .total-invoice-row').before('<tr><td>' + counter + '</td><td></td><td></td></tr>');
-          var mytd = $('#' + pageName + ' .fee-description td');
-          mytd.height(mytd.height() - 2);
+        if (counter > 6) {
+          $('#' + pageName + ' .total-amount-row').before('<tr><td>' + counter + '</td><td></td><td></td></tr>');
+
+          reduceTDHeight();
         }
+        
         wrv(t1, counter, 1, feeInfoName[i]);
         wrv(t1, counter, 2, amount);
+
+        totalMonthlyFee += parseFloat(amount);
         counter++;
-
       }
     }
 
-    // Previous Dues if Any
-    if (ivData.data[1] != "" && ivData.data[1] != 0) {
-      if (counter > 8) {
-        $('#' + pageName + ' .total-invoice-row').before('<tr><td>' + counter + '</td><td></td><td></td></tr>');
-        var mytd = $('#' + pageName + ' .fee-description td');
-        mytd.height(mytd.height() - 2);
-      }
-      wrv(t1, counter, 1, feeInfoName[1]);
-      wrv(t1, counter, 2, ivData.data[1]);
-      counter++;
+    const tax = parseInt(data[2]);
+
+    $('#' + pageName + ' .total-amount').html(totalMonthlyFee);
+    $('#' + pageName + ' .tax-amount').html(tax);
+
+    totalInvoice = Math.round(totalMonthlyFee + previousDues + tax);
+    
+    if (totalInvoice != 0) {
+      $('#' + pageName + ' .total-invoice').html(totalInvoice);
+      $('#' + pageName + ' .amount-words').html(capitalizeTheFirstLetterOfEachWord(numWords(totalInvoice)) + " Only");
     }
 
-    console.log(ivData);
-
-    //Total
-    if (ivData.data[0] != "") {
-      $('#' + pageName + ' .total-invoice').html(ivData.data[0]);
-      $('#' + pageName + ' .amount-words').html(capitalizeTheFirstLetterOfEachWord(numWords(ivData.data[0])) + " Only");
-    }
-
+    console.log(invoiceDataObject);
   }
 
   $('#print-btn').click(function () {
